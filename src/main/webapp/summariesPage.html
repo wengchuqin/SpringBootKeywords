@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-controller="myCtrl">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="plug-in/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="plug-in/jquery/jquery.js"></script>
+    <script src="plug-in/bootstrap/js/bootstrap.min.js"></script>
+    <script src="plug-in/angular/angular.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1>关键词抽取</h1>
+    </div>
+
+    <div class="row">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#">摘要列表</a></li>
+            <li role="presentation"><a href="#">摘要详情</a></li>
+            <li role="presentation"><a href="#">算法比较</a></li>
+        </ul>
+    </div>
+
+    <div>
+        <table class="table table-hover">
+            <caption>总记录数量: {{data.totalElements}}</caption>
+            <thead>
+            <tr>
+                <th>摘要</th>
+                <th>关键词</th>
+                <th>分类号</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="summary in data.content">
+                <td>
+                    <abbr title="{{summary.summary}}" style="border-bottom:none; text-decoration:none">
+                        {{summary.summary | textLengthSet:true:20:'...'}}
+                    </abbr>
+                </td>
+                <td>{{summary.keywords}}</td>
+                <td>{{summary.catelogs}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm">查看详情</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="{{data.first == true ? 'disabled' : ''}}"
+                    ng-click="number = (data.first == true ? number : number - 1)">
+                    <a href="javascript:void(0);" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li ng-show="data.number - 1 > 0" ng-click="number = number - 2"><a href="javascript:void(0);">{{data.number
+                    - 1}}</a></li>
+                <li ng-show="data.number > 0" ng-click="number = number - 1"><a href="javascript:void(0);">{{data.number}}</a>
+                </li>
+
+                <li class="active"><a href="javascript:void(0);">{{data.number + 1}}</a></li>
+
+                <li ng-show="data.number + 2 <= data.totalPages" ng-click="number = number + 1"><a
+                        href="javascript:void(0);">{{data.number + 2}}</a></li>
+                <li ng-show="data.number + 3 <= data.totalPages> 0" ng-click="number = number + 2"><a
+                        href="javascript:void(0);">{{data.number + 3}}</a></li>
+
+
+                <li class="{{data.last == true ? 'disabled' : ''}}"
+                    ng-click="number = (data.last == true ? number : number + 1)">
+                    <a href="javascript:void(0);" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+</div>
+</body>
+</html>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.filter('textLengthSet', function () {
+        return function (value, wordwise, max, tail) {
+            if (!value) return '';
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
+
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                    value = value.substr(0, lastspace);
+                }
+            }
+
+            return value + (tail || ' …');//'...'可以换成其它文字
+        };
+    });
+    app.controller('myCtrl', function ($scope, $log, $http, $interval) {
+        $scope.initTable = function () {
+            $http({
+                method: 'GET',
+                url: 'summaries',
+                params: {
+                    number: $scope.number,
+                    size: $scope.size
+                }
+            }).then(function successCallback(response) {
+                $log.log("summaries", response);
+                $scope.data = response.data;
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                $log.log("summaries fail", response)
+            });
+        }
+
+
+        //初始值
+        $scope.data = null;
+        $scope.number = 0;
+        $scope.size = 10;
+
+        //自动刷新数据
+        $interval(function () {
+            console.log('刷新数据');
+            $scope.initTable();
+        }, 10 * 1000);
+
+        //监听number的变化
+        $scope.$watch('number', function (newValue, oldValue) {
+            $log.log("newValue", newValue);
+            $log.log("oldValue", oldValue);
+            if (newValue < 0) {
+                $scope.number = oldValue;
+                return;
+            }
+
+            if ($scope.data && $scope.data.totalPages && newValue >= $scope.data.totalPages) {
+                $scope.number = oldValue;
+                return;
+            }
+
+            $scope.initTable();
+        });
+    });
+</script>
