@@ -90,13 +90,14 @@ public class LinksPage {
                     reftype,
                     catalogId,
                     catalogName);
-            LOGGER.debug("newUrl:[{}]", newUrl);
+            LOGGER.debug("页面js拼接出来的URL:[{}]", newUrl);
 
             java.net.URL  url = new  java.net.URL(pageUrl);
             System.out.println(url);
             String baseUrl = pageUrl.substring(0, pageUrl.indexOf(url.getPath()));
             LOGGER.debug("baseUrl:[{}]", baseUrl);
             urlList = getAllUrlFromHtml(Jsoup.connect(newUrl).get(), baseUrl);
+            LOGGER.debug("页面js拼接出来的URL，所指向的页面抽取出来的URL:[{}]", newUrl);
         } catch (Exception e) {
             e.printStackTrace();
             urlList = new ArrayList<>();

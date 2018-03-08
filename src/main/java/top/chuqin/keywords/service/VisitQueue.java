@@ -29,6 +29,7 @@ public class VisitQueue {
             //如果url已经存在，不做处理
             Visit v = visitRepository.findFirstByUrl(url);
             if (v != null) {
+                LOGGER.debug("url已存在，[{}]", v.getUrl());
                 return;
             }
 

@@ -18,7 +18,7 @@ public class DetailCrawler{
     private final VisitQueue visitQueue;
     private final SummaryService summaryService;
 
-    public DetailCrawler(String url, VisitQueue visitQueue, SummaryService summaryService) {
+    public  DetailCrawler(String url, VisitQueue visitQueue, SummaryService summaryService) {
         this.url = url;
         this.visitQueue = visitQueue;
         this.summaryService = summaryService;

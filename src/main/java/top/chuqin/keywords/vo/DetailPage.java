@@ -30,7 +30,7 @@ public class DetailPage {
             document = doc;
         }
 
-        parseHtml(doc);
+        parseHtml(doc, pageUrl);
     }
 
 
@@ -46,7 +46,7 @@ public class DetailPage {
     private String[] keyListToKeyArr(List<String> keyList){
         String[] keyArr = new String[keyList.size()];
         for(int i = 0; i < keyArr.length; i++){
-            keyArr[i] = keyList.get(i).substring(0, keyArr.length - 1);
+            keyArr[i] = keyList.get(i).substring(0, keyList.get(i).length() - 1);
         }
         return keyArr;
     }
@@ -55,10 +55,12 @@ public class DetailPage {
         return catelogStr.split(";");
     }
 
-    private void parseHtml(Document document){
+    private void parseHtml(Document document, String url){
 
         try{
             summaryVo = new SummaryVo();
+
+            summaryVo.setUrl(url);
 
             //读取摘要
             Element summarySelect = document.selectFirst("#ChDivSummary");
@@ -77,6 +79,7 @@ public class DetailPage {
             String catelog = catalogSelect.ownText();
             summaryVo.setCatelogs(parseCatelog(catelog));
             System.out.println("分类号：" + catelog);
+
         }catch (Exception e){
             summaryVo = null;
             LOGGER.error("解析html页面内容失败。html页面如下:\n{}, 报错信息如下：\n{}", document.html(), e);

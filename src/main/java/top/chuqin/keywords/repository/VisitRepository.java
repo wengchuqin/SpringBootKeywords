@@ -9,5 +9,4 @@ import java.util.List;
 public interface VisitRepository extends JpaRepository<Visit, Long>{
     Visit findFirstByHasVisitedFalseOrderByIdAsc();
     Visit findFirstByUrl(String url);
-    Visit findFirstByIdIsNotNullOrderByIdDesc();
 }

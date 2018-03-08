@@ -17,37 +17,44 @@ public class SummaryVo {
      */
     private String[] catelogs;
 
-    public SummaryVo() {
-    }
+    /**
+     * 相对应的URL
+     */
+    private String url;
 
-    public SummaryVo(String summary, String[] keywords, String[] catelogs) {
-        this.summary = summary;
-        this.keywords = keywords;
-        this.catelogs = catelogs;
+    public SummaryVo() {
     }
 
     public String getSummary() {
         return summary;
     }
 
-    public String[] getKeywords() {
-        return keywords;
-    }
-
-    public String[] getCatelogs() {
-        return catelogs;
-    }
-
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public String[] getKeywords() {
+        return keywords;
     }
 
     public void setKeywords(String[] keywords) {
         this.keywords = keywords;
     }
 
+    public String[] getCatelogs() {
+        return catelogs;
+    }
+
     public void setCatelogs(String[] catelogs) {
         this.catelogs = catelogs;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
@@ -57,13 +64,14 @@ public class SummaryVo {
         SummaryVo summaryVo = (SummaryVo) o;
         return Objects.equals(summary, summaryVo.summary) &&
                 Arrays.equals(keywords, summaryVo.keywords) &&
-                Arrays.equals(catelogs, summaryVo.catelogs);
+                Arrays.equals(catelogs, summaryVo.catelogs) &&
+                Objects.equals(url, summaryVo.url);
     }
 
     @Override
     public int hashCode() {
 
-        int result = Objects.hash(summary);
+        int result = Objects.hash(summary, url);
         result = 31 * result + Arrays.hashCode(keywords);
         result = 31 * result + Arrays.hashCode(catelogs);
         return result;
@@ -75,6 +83,7 @@ public class SummaryVo {
                 "summary='" + summary + '\'' +
                 ", keywords=" + Arrays.toString(keywords) +
                 ", catelogs=" + Arrays.toString(catelogs) +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

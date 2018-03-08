@@ -5,17 +5,28 @@ import top.chuqin.keywords.vo.SummaryVo;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * TODO 添加URL， 添加
+ */
 @Entity
 @Table(name = "tb_summary")
-public class Summary {
+public class Summary implements Serializable{
 
     public static final String SEPARATOR = " ";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    /**
+     * 文章的url
+     */
+    @NotNull
+    @Column(name="url", nullable=false)
+    private String url;
 
     /**
      * 文章摘要
@@ -40,11 +51,14 @@ public class Summary {
     @Column(name="catelogs", nullable=false)
     private String catelogs;
 
+
+
     public Summary() {
     }
 
 
-    public Summary(String summary, String keywords, String catelogs) {
+    public Summary(String url, String summary, String keywords, String catelogs) {
+        this.url = url;
         this.summary = summary;
         this.keywords = keywords;
         this.catelogs = catelogs;
@@ -68,7 +82,7 @@ public class Summary {
         }
         catelogs = catelogs.substring(0, catelogs.length() - 1);
 
-        return new Summary(vo.getSummary(), keywords, catelogs);
+        return new Summary(vo.getUrl(), vo.getSummary(), keywords, catelogs);
     }
 
     public Long getId() {

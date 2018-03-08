@@ -1,6 +1,7 @@
 package top.chuqin.keywords.crawler;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import top.chuqin.keywords.service.SummaryService;
 import top.chuqin.keywords.service.VisitQueue;
 import top.chuqin.keywords.vo.LinksPage;
@@ -11,7 +12,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 
 public class LinksCrawler {
-    private static Logger LOGGER = getLogger(DetailCrawler.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(LinksCrawler.class);
     private final String url;
     private final VisitQueue visitQueue;
     private final SummaryService summaryService;

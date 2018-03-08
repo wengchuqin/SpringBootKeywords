@@ -13,7 +13,7 @@ import top.chuqin.keywords.repository.SummaryRepository;
 import java.util.List;
 
 @Service
-public class SummaryService {
+public class SummaryService{
     private static Logger LOGGER = LoggerFactory.getLogger(SummaryService.class);
 
     @Autowired
@@ -31,5 +31,10 @@ public class SummaryService {
 
     public long getRecordNum(){
         return summaryRepository.count();
+    }
+
+    public Summary findOne(Long id){
+        Summary summary = summaryRepository.findOne(id);
+        return summary;
     }
 }

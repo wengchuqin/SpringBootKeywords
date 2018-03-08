@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-controller="myCtrl">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="plug-in/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="plug-in/jquery/jquery.js"></script>
+    <script src="plug-in/bootstrap/js/bootstrap.min.js"></script>
+    <script src="plug-in/angular/angular.min.js"></script>
+    <script src="plug-in/angular/angular-route.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1>关键词抽取</h1>
+    </div>
+
+    <div class="row">
+        <ul class="nav nav-tabs" ng-model="nav">
+            <!-- TODO 这里要调成动态的 angularjs比较难 考虑用Jquery， 根据url来选中-->
+            <li role="presentation" class="active"><a href="#/summariesPage">摘要列表</a></li>
+            <li role="presentation"><a href="#/summaryDetailPage">摘要详情</a></li>
+            <li role="presentation"><a href="#/printers">算法比较</a></li>
+        </ul>
+    </div>
+    <div ng-view></div>
+</div>
+</body>
+</html>
+
+<script>
+    var app = angular.module('myApp', ['ngRoute']);
+    app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+            .when('/summariesPage', {
+                templateUrl: "summariesPage.html",
+                controller: "summariesPageCtrl"
+            })
+            .when('/summaryDetailPage/:summaryId', {
+                templateUrl: "summaryDetailPage.html",
+                controller: "summaryDetailPageCtrl"
+
+            })
+            .otherwise({redirectTo: '/summariesPage'});
+    }]);
+    app.controller("myCtrl", function ($scope, $log, $http, $interval) {
+        $log.log("nav", $scope.nav)
+    })
+</script>
+<script src="js/summariesPage.js"></script>
+<script src="js/summaryDetailPage.js"></script>

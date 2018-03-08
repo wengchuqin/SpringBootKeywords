@@ -2,6 +2,7 @@ package top.chuqin.keywords.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.chuqin.keywords.domain.Summary;
@@ -25,5 +26,8 @@ public class SummaryController {
         return page;
     }
 
-
+    @RequestMapping("/summaries/{id}")
+    public Summary findOne(@PathVariable(value="id") Long id){
+        return summaryService.findOne(id);
+    }
 }
