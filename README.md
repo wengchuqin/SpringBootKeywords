@@ -9,3 +9,6 @@
 
 ## entranceUrl.data
 指定入口url
+
+## ansj_seg分词工具文档
+https://github.com/NLPchina/ansj_seg/wiki

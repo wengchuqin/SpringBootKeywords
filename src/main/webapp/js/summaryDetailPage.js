@@ -13,6 +13,22 @@ app.controller('summaryDetailPageCtrl', function ($scope, $log, $http, $interval
             // 请求失败执行代码
             $log.log("summaries fail", response)
         });
+
+
+        $http({
+            method: 'GET',
+            url: 'analyzation/' + $routeParams.summaryId
+        }).then(function successCallback(response) {
+            $log.log("analyzation", response);
+            $scope.analyzation = response.data;
+        }, function errorCallback(response) {
+            // 请求失败执行代码
+            $log.log("analyzation fail", response)
+        });
+    }
+
+    $scope.switchShowTerms = function () {
+        $scope.showTerms = !$scope.showTerms;
     }
 
     $scope.initData();
