@@ -37,4 +37,9 @@ public class SummaryService{
         Summary summary = summaryRepository.findOne(id);
         return summary;
     }
+
+    public List<Summary> getSimilarSummaryList(Long id){
+        Summary summary = findOne(id);
+        return summaryRepository.findTop100ByCatelogsContainsAndIdNot(summary.getCatelogs(), id);
+    }
 }

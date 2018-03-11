@@ -8,9 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * TODO 添加URL， 添加
- */
+
 @Entity
 @Table(name = "tb_summary")
 public class Summary implements Serializable{
@@ -115,6 +113,14 @@ public class Summary implements Serializable{
 
     public void setCatelogs(String catelogs) {
         this.catelogs = catelogs;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override

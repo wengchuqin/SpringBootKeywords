@@ -38,4 +38,35 @@ public class SummaryServiceTest extends JunitTestBase {
         Assert.assertEquals(summary.getKeywords(), summaryInDb.getKeywords());
         Assert.assertEquals(summary.getSummary(), summaryInDb.getSummary());
     }
+
+
+    @Test
+    public void getSimilarSummaryList() {
+        summaryRepository.deleteAll();
+
+        long id1= -1;
+        for(int i = 0; i < 10; i++){
+            Summary summary = new Summary();
+            summary.setSummary("summary");
+            summary.setKeywords("keywords");
+            summary.setUrl("url");
+            summary.setCatelogs("catelogs1");
+            summaryRepository.saveAndFlush(summary);
+            id1 = summary.getId();
+        }
+
+        long id2= -1;
+        for(int i = 0; i < 5; i++){
+            Summary summary = new Summary();
+            summary.setSummary("summary");
+            summary.setKeywords("keywords");
+            summary.setUrl("url");
+            summary.setCatelogs("catelogs2");
+            summaryRepository.saveAndFlush(summary);
+            id2 = summary.getId();
+        }
+
+        Assert.assertEquals(summaryService.getSimilarSummaryList(id1).size(), 9);
+        Assert.assertEquals(summaryService.getSimilarSummaryList(id2).size(), 4);
+    }
 }

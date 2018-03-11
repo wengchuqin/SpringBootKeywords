@@ -5,7 +5,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.domain.Visit;
 
+import java.util.List;
 
-public interface SummaryRepository extends JpaRepository<Summary, Long>{
 
+public interface SummaryRepository extends JpaRepository<Summary, Long> {
+    List<Summary> findTop100ByCatelogsContainsAndIdNot(String catelogs, Long id);
 }
