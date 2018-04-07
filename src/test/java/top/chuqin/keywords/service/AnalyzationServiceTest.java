@@ -4,16 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import top.chuqin.keywords.domain.ExtractKeywordResult;
-import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.repository.ExtractKeywordResultRepository;
-import top.chuqin.keywords.repository.SummaryRepository;
 import top.chuqin.keywords.vo.AlgorithmCompareVo;
 import top.chuqin.keywords.vo.Prf1;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,7 +33,7 @@ public class AnalyzationServiceTest {
 
         List<ExtractKeywordResult> list = Arrays.asList(
                 new ExtractKeywordResult(null, ExtractKeywordResult.AlgorithmEnum.ANSJ_SEG, null, prf11),
-                new ExtractKeywordResult(null, ExtractKeywordResult.AlgorithmEnum.PAGE_RANK, null, prf12)
+                new ExtractKeywordResult(null, ExtractKeywordResult.AlgorithmEnum.TEXT_RANK, null, prf12)
         );
 
         for(ExtractKeywordResult.AlgorithmEnum e : ExtractKeywordResult.AlgorithmEnum.values()){
@@ -44,7 +41,7 @@ public class AnalyzationServiceTest {
         }
 
         List<AlgorithmCompareVo> algorithmCompareVoList = analyzationService.calcAlgorithmCompareVo();
-        algorithmCompareVoList.stream().forEach(algorithmCompareVo -> {
+        algorithmCompareVoList.forEach(algorithmCompareVo -> {
             Assert.assertEquals(new Double(0.45), algorithmCompareVo.getP());
             Assert.assertEquals(new Double(0.45), algorithmCompareVo.getR());
             Assert.assertEquals(new Double(0.45), algorithmCompareVo.getF1());

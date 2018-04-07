@@ -32,7 +32,7 @@ public class PageRankService implements IExtractKeyword{
         List<String> keywordList = HanLP.extractKeyword(summary.getSummary(), summary.getKeywords().size());
         Prf1 prf1 = new Prf1(summary.getKeywords(), keywordList);
 
-        ExtractKeywordResult result = new ExtractKeywordResult(summary.getId(), ExtractKeywordResult.AlgorithmEnum.PAGE_RANK,
+        ExtractKeywordResult result = new ExtractKeywordResult(summary.getId(), ExtractKeywordResult.AlgorithmEnum.TEXT_RANK,
                 String.join(Constant.SEPARATOR, keywordList), prf1);
 
         LOGGER.debug("extract:" + result);

@@ -39,7 +39,7 @@ public class ExtractKeywordResult {
 
 
     public enum AlgorithmEnum{
-        PAGE_RANK,
+        TEXT_RANK,
         TF_IDF,
         ANSJ_SEG
     }
