@@ -7,10 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.repository.SummaryRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class SummaryService{
@@ -18,6 +22,7 @@ public class SummaryService{
 
     @Autowired
     private SummaryRepository summaryRepository;
+
 
     public void add(Summary summary) {
         summaryRepository.save(summary);
@@ -40,6 +45,11 @@ public class SummaryService{
 
     public List<Summary> getSimilarSummaryList(Long id){
         Summary summary = findOne(id);
-        return summaryRepository.findTop100ByCatelogsContainsAndIdNot(summary.getCatelogs(), id);
+        return summaryRepository.findAll().stream().filter(new Predicate<Summary>() {
+            @Override
+            public boolean test(Summary test) {
+                return test.getId() != summary.getId() && CollectionUtils.containsAny(summary.getCatelogs(), test.getCatelogs());
+            }
+        }).limit(100).collect(Collectors.toList());
     }
 }

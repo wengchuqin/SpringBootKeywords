@@ -1,17 +1,20 @@
 package top.chuqin.keywords.domain;
 
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.util.Assert;
 import top.chuqin.keywords.vo.SummaryVo;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "tb_summary")
-public class Summary implements Serializable{
+public class Summary implements Serializable {
 
     public static final String SEPARATOR = " ";
 
@@ -23,14 +26,14 @@ public class Summary implements Serializable{
      * 文章的url
      */
     @NotNull
-    @Column(name="url", nullable=false)
+    @Column(name = "url", nullable = false)
     private String url;
 
     /**
      * 文章摘要
      */
     @NotNull
-    @Column(name="summary", nullable=false, length=100000)
+    @Column(name = "summary", nullable = false, length = 100000)
     private String summary;
 
 
@@ -38,53 +41,53 @@ public class Summary implements Serializable{
      * 摘要包含的关键词，用空格分开。
      */
     @NotNull
-    @Column(name="keywords", nullable=false)
-    private String keywords;
+    @ElementCollection
+    @CollectionTable(
+            name = "tb_summary_keyword",
+            joinColumns = @JoinColumn(name = "summary_id")
+    )
+    @Column(name = "keyword")
+    private List<String> keywords;
 
 
     /**
      * 文章的分类号，用空格分开。
      */
     @NotNull
-    @Column(name="catelogs", nullable=false)
-    private String catelogs;
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "tb_summary_catelog",
+            joinColumns = @JoinColumn(name = "summary_id")
+    )
+    @Column(name = "catelog")
+    private List<String> catelogs;
 
 
     public Summary() {
     }
 
-
-    public Summary(String url, String summary, String keywords, String catelogs) {
+    public Summary(String url, String summary, List<String> keywords, List<String> catelogs) {
         this.url = url;
         this.summary = summary;
         this.keywords = keywords;
         this.catelogs = catelogs;
     }
 
-    public static Summary fromVo(SummaryVo vo){
+    public static Summary fromVo(SummaryVo vo) {
         Assert.notNull(vo, "参数不能为null");
         Assert.notNull(vo.getSummary(), "summary不能为null");
         Assert.notEmpty(vo.getKeywords(), "keywords不能为空");
         Assert.notEmpty(vo.getCatelogs(), "keywords不能为空");
 
-        String keywords = "";
-        for(String s : vo.getKeywords()){
-            keywords += (s + SEPARATOR);
-        }
-        keywords = keywords.substring(0, keywords.length() - 1);
-
-        String catelogs = "";
-        for(String s : vo.getCatelogs()){
-            catelogs += (s + SEPARATOR);
-        }
-        catelogs = catelogs.substring(0, catelogs.length() - 1);
-
-        return new Summary(vo.getUrl(), vo.getSummary(), keywords, catelogs);
+        return new Summary(vo.getUrl(), vo.getSummary(), Arrays.asList(vo.getKeywords()), Arrays.asList(vo.getCatelogs()));
     }
 
     public Long getId() {
         return id;
+    }
+
+    public static String getSEPARATOR() {
+        return SEPARATOR;
     }
 
     public void setId(Long id) {
@@ -99,19 +102,19 @@ public class Summary implements Serializable{
         this.summary = summary;
     }
 
-    public String getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String keywords) {
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 
-    public String getCatelogs() {
+    public List<String> getCatelogs() {
         return catelogs;
     }
 
-    public void setCatelogs(String catelogs) {
+    public void setCatelogs(List<String> catelogs) {
         this.catelogs = catelogs;
     }
 

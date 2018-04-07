@@ -9,5 +9,4 @@ import java.util.List;
 
 
 public interface SummaryRepository extends JpaRepository<Summary, Long> {
-    List<Summary> findTop100ByCatelogsContainsAndIdNot(String catelogs, Long id);
 }

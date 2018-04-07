@@ -25,6 +25,17 @@ app.controller('summaryDetailPageCtrl', function ($scope, $log, $http, $interval
             // 请求失败执行代码
             $log.log("analyzation fail", response)
         });
+
+        $http({
+            method: 'GET',
+            url: 'tfidf/' + $routeParams.summaryId
+        }).then(function successCallback(response) {
+            $log.log("tfidf", response);
+            $scope.tfidf = response.data;
+        }, function errorCallback(response) {
+            // 请求失败执行代码
+            $log.log("analyzation fail", response)
+        });
     }
 
     $scope.switchShowTerms = function () {

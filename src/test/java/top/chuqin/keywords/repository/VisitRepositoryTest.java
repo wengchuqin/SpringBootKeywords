@@ -28,6 +28,15 @@ public class VisitRepositoryTest extends JunitTestBase {
     }
 
 
+    @Test
+    public void testSave(){
+        Visit visit = new Visit(null, "url", true);
+        visitRepository.saveAndFlush(visit);
+        System.out.println(visit);
+        visit.setUrl("url2");
+        visitRepository.saveAndFlush(visit);
+        System.out.println(visitRepository.findOne(visit.getId()));
+    }
 
     @Test
     public void testInsert(){

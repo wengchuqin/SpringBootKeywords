@@ -38,7 +38,7 @@ public class AnalyzationService {
 
 
         List<String> keywords = new ArrayList<>();
-        KeyWordComputer kwc = new KeyWordComputer(summary.getKeywords().split(Summary.SEPARATOR).length);
+        KeyWordComputer kwc = new KeyWordComputer(summary.getKeywords().size());
         Collection<Keyword> result = kwc.computeArticleTfidf(null, summary.getSummary());
         result.stream().forEach(keyword -> keywords.add(keyword.getName()));
         analyzationVo.setAnsjKeywords(keywords);

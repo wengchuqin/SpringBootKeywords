@@ -10,6 +10,8 @@ import top.chuqin.keywords.JunitTestBase;
 import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.repository.SummaryRepository;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,8 +27,8 @@ public class SummaryServiceTest extends JunitTestBase {
         summaryRepository.deleteAll();
 
         Summary summary = new Summary();
-        summary.setCatelogs("catelogs");
-        summary.setKeywords("keywords");
+        summary.setCatelogs(Arrays.asList("catelogs"));
+        summary.setKeywords(Arrays.asList("keywords"));
         summary.setSummary("summary");
         summaryService.add(summary);
         System.out.printf("summary:%s\n", summary);
@@ -48,9 +50,9 @@ public class SummaryServiceTest extends JunitTestBase {
         for(int i = 0; i < 10; i++){
             Summary summary = new Summary();
             summary.setSummary("summary");
-            summary.setKeywords("keywords");
+            summary.setKeywords(Arrays.asList("keywords"));
             summary.setUrl("url");
-            summary.setCatelogs("catelogs1");
+            summary.setCatelogs(Arrays.asList("TP111"));
             summaryRepository.saveAndFlush(summary);
             id1 = summary.getId();
         }
@@ -59,9 +61,9 @@ public class SummaryServiceTest extends JunitTestBase {
         for(int i = 0; i < 5; i++){
             Summary summary = new Summary();
             summary.setSummary("summary");
-            summary.setKeywords("keywords");
+            summary.setKeywords(Arrays.asList("keywords"));
             summary.setUrl("url");
-            summary.setCatelogs("catelogs2");
+            summary.setCatelogs(Arrays.asList("TP222"));
             summaryRepository.saveAndFlush(summary);
             id2 = summary.getId();
         }
