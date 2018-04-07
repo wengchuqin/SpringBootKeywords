@@ -5,8 +5,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.chuqin.keywords.domain.ExtractKeywordResult;
 import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.service.AnalyzationService;
+import top.chuqin.keywords.service.ExtractKeywordResultService;
 import top.chuqin.keywords.vo.AlgorithmCompareVo;
 import top.chuqin.keywords.vo.AnalyzationVo;
 import top.chuqin.keywords.vo.SuccessVo;
@@ -17,10 +19,12 @@ import java.util.List;
 public class AnalyzationController {
     @Autowired
     private AnalyzationService analyzationService;
+    @Autowired
+    private ExtractKeywordResultService extractKeywordResultService;
 
     @RequestMapping("/analyzation/{id}")
-    public AnalyzationVo analyzation(@PathVariable(value="id") Long id){
-        return analyzationService.analyzation(id);
+    public List<ExtractKeywordResult> analyzation(@PathVariable(value="id") Long id){
+        return extractKeywordResultService.findAllBySummaryId(id);
     }
 
     @RequestMapping("/analyze/start")

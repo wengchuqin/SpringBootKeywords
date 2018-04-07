@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ExtractKeywordResultRepository extends JpaRepository<ExtractKeywordResult, Long> {
     List<ExtractKeywordResult> findAllByAlgorithm(String algorithm);
+    List<ExtractKeywordResult> findAllBySummaryId(Long summaryId);
 }

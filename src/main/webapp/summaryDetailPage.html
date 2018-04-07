@@ -5,22 +5,36 @@
     <p>{{summary.keywords}}</p>
     <h2>分类号</h2>
     <p>{{summary.catelogs}}</p>
-    <h2 ng-click="switchShowTerms()">分词</h2>
-    <div class="row" ng-show="showTerms">
-        <div class="col-md-1" ng-repeat="term in analyzation.terms track by $index">
-            {{term}}
-        </div>
-    </div>
-    <h2>ansj关键词提取结果</h2>
-    <div class="row">
-        <div class="col-md-1" ng-repeat="keyword in analyzation.ansjKeywords">
-            {{keyword}}
-        </div>
-    </div>
 
-    <h2>TF-IDF 关键词摘取算法</h2>
-    <div>关键词：{{tfidf.keywords}}</div>
-    <div>P：{{tfidf.p | number:2}}</div>
-    <div>R：{{tfidf.r | number:2}}</div>
-    <div>F1：{{tfidf.f1 | number:2}}</div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>
+                算法
+            </th>
+            <th>
+                关键词
+            </th>
+            <th>
+                p
+            </th>
+            <th>
+                r
+            </th>
+            <th>
+                f1
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="o in list">
+            <td>{{o.algorithm}}</td>
+            <td>{{o.keywords}}</td>
+            <td>{{o.p}}</td>
+            <td>{{o.r}}</td>
+            <td>{{o.f1}}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

@@ -20,7 +20,7 @@ app.controller('summaryDetailPageCtrl', function ($scope, $log, $http, $interval
             url: 'analyzation/' + $routeParams.summaryId
         }).then(function successCallback(response) {
             $log.log("analyzation", response);
-            $scope.analyzation = response.data;
+            $scope.list = response.data;
         }, function errorCallback(response) {
             // 请求失败执行代码
             $log.log("analyzation fail", response)
@@ -36,7 +36,6 @@ app.controller('summaryDetailPageCtrl', function ($scope, $log, $http, $interval
             // 请求失败执行代码
             $log.log("analyzation fail", response)
         });
-
 
     }
 
