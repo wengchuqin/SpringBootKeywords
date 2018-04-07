@@ -7,7 +7,7 @@ app.controller('algorithmComparisonPageCtrl', function ($scope, $log, $http, $in
         }).then(function successCallback(response) {
             $log.log("analyze/start", response);
         });
-    }
+    };
 
     $scope.init = function () {
         $http({
@@ -25,13 +25,13 @@ app.controller('algorithmComparisonPageCtrl', function ($scope, $log, $http, $in
             });
             $scope.initChars(algorithmNameArr, series, data);
         });
-    }
+    };
 
     $scope.initChars = function (labels, series, data) {
         $scope.labels = labels;
         $scope.series = series;
         $scope.data = data;
-    }
+    };
 
     $scope.queryStatus = function () {
         $http({
@@ -41,13 +41,14 @@ app.controller('algorithmComparisonPageCtrl', function ($scope, $log, $http, $in
             $log.log("analyze/result", response);
             $scope.status = response.data;
         });
-    }
+    };
 
     //自动刷新数据
     $interval(function () {
         console.log('刷新数据');
         $scope.queryStatus();
-    }, 2 * 1000);
+        $scope.init();
+    }, 5 * 1000);
 
 
     $scope.init();
