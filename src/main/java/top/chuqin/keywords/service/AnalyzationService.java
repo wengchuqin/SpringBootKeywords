@@ -20,6 +20,7 @@ import top.chuqin.keywords.repository.SummaryRepository;
 import top.chuqin.keywords.utils.ApplicationContextUtil;
 import top.chuqin.keywords.vo.AlgorithmCompareVo;
 import top.chuqin.keywords.vo.AnalyzationVo;
+import top.chuqin.keywords.vo.AnalyzeStatus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -90,7 +91,7 @@ public class AnalyzationService {
                 services.forEach(iExtractKeyword -> {
                     ExtractKeywordResult result = iExtractKeyword.extract(summary);
                     extractKeywordResultRepository.save(result);
-                    total++;
+                    done++;
                 });
             });
             LOGGER.debug("关键词计算完毕");
@@ -126,6 +127,7 @@ public class AnalyzationService {
         return ret;
     }
 
-
-
+    public AnalyzeStatus getStatus(){
+        return new AnalyzeStatus(total, done, run);
+    }
 }

@@ -1,50 +1,22 @@
-package top.chuqin.keywords.domain;
+package top.chuqin.keywords.vo;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
 
-@Entity
-@Table(name = "tb_tfdif")
 public class Tfidf {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name="summary_id", nullable=false)
     private Long summaryId;
 
-    @NotNull
-    @ElementCollection
-    @CollectionTable(
-            name = "tb_tfdif_word",
-            joinColumns = @JoinColumn(name = "allword_id")
-    )
-    @Column(name="allWords", nullable=false)
     private List<String> allWords;
 
-    @NotNull
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "tb_tfdif_keyword",
-            joinColumns = @JoinColumn(name = "keyword_id")
-    )
-    @Column(name="keywords", nullable=false)
     private List<String> keywords;
 
-    @NotNull
-    @Column(name="p", nullable=false)
     private Double p;
 
-    @NotNull
-    @Column(name="r", nullable=false)
     private Double r;
 
-    @NotNull
-    @Column(name="f1", nullable=false)
     private Double f1;
 
     public Tfidf() {

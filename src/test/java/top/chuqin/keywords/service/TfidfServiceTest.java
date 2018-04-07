@@ -8,9 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import top.chuqin.keywords.JunitTestBase;
 import top.chuqin.keywords.domain.Summary;
-import top.chuqin.keywords.domain.Tfidf;
-import top.chuqin.keywords.repository.SummaryRepository;
-import top.chuqin.keywords.repository.TfidfRepository;
+import top.chuqin.keywords.vo.Tfidf;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,10 +18,6 @@ import java.util.List;
 public class TfidfServiceTest extends JunitTestBase {
     @Autowired
     private TfidfService tfidfService;
-    @Autowired
-    private TfidfRepository tfidfRepository;
-    @Autowired
-    private SummaryRepository summaryRepository;
 
     @Test
     public void testSave(){

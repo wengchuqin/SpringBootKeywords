@@ -9,15 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import top.chuqin.keywords.constant.Constant;
 import top.chuqin.keywords.domain.ExtractKeywordResult;
 import top.chuqin.keywords.domain.Summary;
-import top.chuqin.keywords.domain.Tfidf;
 import top.chuqin.keywords.repository.SummaryRepository;
-import top.chuqin.keywords.repository.TfidfRepository;
-import top.chuqin.keywords.utils.Progress;
 import top.chuqin.keywords.vo.Prf1;
-import top.chuqin.keywords.vo.WordFreq;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service

@@ -11,9 +11,11 @@ import top.chuqin.keywords.service.AnalyzationService;
 import top.chuqin.keywords.service.ExtractKeywordResultService;
 import top.chuqin.keywords.vo.AlgorithmCompareVo;
 import top.chuqin.keywords.vo.AnalyzationVo;
+import top.chuqin.keywords.vo.AnalyzeStatus;
 import top.chuqin.keywords.vo.SuccessVo;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AnalyzationController {
@@ -38,5 +40,8 @@ public class AnalyzationController {
         return analyzationService.calcAlgorithmCompareVo();
     }
 
-
+    @RequestMapping("/analyze/status")
+    public AnalyzeStatus status() {
+        return analyzationService.getStatus();
+    }
 }

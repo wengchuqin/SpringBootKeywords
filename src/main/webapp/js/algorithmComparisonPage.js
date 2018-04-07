@@ -17,7 +17,7 @@ app.controller('algorithmComparisonPageCtrl', function ($scope, $log, $http, $in
             $log.log("analyze/result", response);
 
             var data = [];
-            var algorithmNameArr = ["p1", "r1", "f1"];
+            var algorithmNameArr = ["p", "r", "f1"];
             var series = [];
             response.data.forEach(function (v) {
                 data.push([v.p, v.r, v.f1]);
@@ -32,6 +32,23 @@ app.controller('algorithmComparisonPageCtrl', function ($scope, $log, $http, $in
         $scope.series = series;
         $scope.data = data;
     }
+
+    $scope.queryStatus = function () {
+        $http({
+            method: 'GET',
+            url: 'analyze/status'
+        }).then(function successCallback(response) {
+            $log.log("analyze/result", response);
+            $scope.status = response.data;
+        });
+    }
+
+    //自动刷新数据
+    $interval(function () {
+        console.log('刷新数据');
+        $scope.queryStatus();
+    }, 2 * 1000);
+
 
     $scope.init();
 

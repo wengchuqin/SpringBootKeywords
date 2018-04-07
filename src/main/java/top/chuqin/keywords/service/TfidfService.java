@@ -5,11 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.chuqin.keywords.constant.Constant;
+import top.chuqin.keywords.domain.ExtractKeywordResult;
 import top.chuqin.keywords.domain.Summary;
-import top.chuqin.keywords.domain.Tfidf;
-import top.chuqin.keywords.repository.SummaryRepository;
-import top.chuqin.keywords.repository.TfidfRepository;
-import top.chuqin.keywords.utils.Progress;
+import top.chuqin.keywords.vo.Tfidf;
+import top.chuqin.keywords.vo.Prf1;
 import top.chuqin.keywords.vo.WordFreq;
 
 import java.util.ArrayList;
@@ -18,63 +18,14 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TfidfService {
+public class TfidfService implements IExtractKeyword{
     private static Logger LOGGER = LoggerFactory.getLogger(TfidfService.class);
 
     @Autowired
     private SummaryService summaryService;
 
-    @Autowired
-    private SummaryRepository summaryRepository;
 
-    @Autowired
-    private TfidfRepository tfidfRepository;
 
-    private Progress progress = new Progress();
-
-    public Tfidf findBySummaryId(Long summaryId) {
-        Tfidf tfidf = tfidf(summaryId);
-        tfidfRepository.save(tfidf);
-        return tfidf;
-    }
-
-    public void calcAllTfidf() {
-        if (progress.isStart()) {
-            return;
-        }
-        progress.setStart(true);
-        progress.setHasDone(false);
-
-        new Thread(() -> {
-            List<Summary> allSummary = summaryRepository.findAll();
-            progress.setTotal(allSummary.size());
-            allSummary.stream().forEach(summary -> {
-                LOGGER.debug("start");
-                Tfidf tmp = tfidfRepository.findFirstBySummaryId(summary.getId());
-                Tfidf tfidf = tfidf(summary.getId());
-                if(tmp != null){
-                    tfidf.setId(tmp.getId());
-                }
-                tfidfRepository.save(tfidf);
-                progress.setCompletion(progress.getCompletion() + 1);
-                LOGGER.debug("end{}", progress);
-            });
-
-            progress.setStart(false);
-            progress.setHasDone(true);
-        }).start();
-    }
-
-    public Progress calcAllTfidfStatus(){
-        return progress;
-    }
-
-    public Tfidf tfidf(Long summaryId) {
-        Summary summary = summaryService.findOne(summaryId);
-        List<WordWithTfidf> tfidfList = tfidfList(summaryId);
-        Tfidf tfidf = tfdif(summary, tfidfList);
-        return tfidf;
-    }
 
     public Tfidf tfdif(Summary summary, List<WordWithTfidf> tfidfList) {
         Tfidf tfidf = new Tfidf();
@@ -146,6 +97,20 @@ public class TfidfService {
 
         Collections.sort(wordWithTfidfList);
         return wordWithTfidfList;
+    }
+
+    @Override
+    public ExtractKeywordResult extract(Summary summary) {
+        List<WordWithTfidf> tfidfList = tfidfList(summary.getId());
+        Tfidf tfidf = tfdif(summary, tfidfList);
+
+        ExtractKeywordResult extractKeywordResult = new ExtractKeywordResult(
+                summary.getId(),
+                ExtractKeywordResult.AlgorithmEnum.TF_IDF,
+                String.join(Constant.SEPARATOR, tfidf.getKeywords()),
+                new Prf1(summary.getKeywords(), tfidf.getKeywords())
+        );
+        return extractKeywordResult;
     }
 
 

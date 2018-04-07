@@ -21,7 +21,7 @@
     <div class="row">
         <ul class="nav nav-tabs" ng-model="nav">
             <!-- TODO 这里要调成动态的 angularjs比较难 考虑用Jquery， 根据url来选中-->
-            <li role="presentation" class="active"><a href="#/summariesPage">摘要列表</a></li>
+            <li role="presentation"><a href="#/summariesPage">摘要列表</a></li>
             <li role="presentation"><a href="#/summaryDetailPage">摘要详情</a></li>
             <li role="presentation"><a href="#/algorithmComparisonPage">算法比较</a></li>
             <li role="presentation"><a href="#/systemPage">系统设置</a></li>
@@ -57,9 +57,13 @@
             })
             .otherwise({redirectTo: '/summariesPage'});
     }]);
-    app.controller("myCtrl", function ($scope, $log, $http, $interval) {
+    app.controller("myCtrl", function ($scope, $log, $http, $interval, $location) {
         $log.log("nav", $scope.nav)
+        $scope.$on('$routeChangeSuccess', function (evt, current, previous) {
+            $log.log('route have already changed ：' + $location.path());
+        });
     })
+
 </script>
 <script src="js/summariesPage.js"></script>
 <script src="js/summaryDetailPage.js"></script>
