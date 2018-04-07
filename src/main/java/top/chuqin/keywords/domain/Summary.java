@@ -1,5 +1,7 @@
 package top.chuqin.keywords.domain;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.repository.cdi.Eager;
 import org.springframework.util.Assert;
 import top.chuqin.keywords.vo.SummaryVo;
@@ -15,8 +17,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_summary")
 public class Summary implements Serializable {
-
-    public static final String SEPARATOR = " ";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,12 +41,13 @@ public class Summary implements Serializable {
      * 摘要包含的关键词，用空格分开。
      */
     @NotNull
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "tb_summary_keyword",
             joinColumns = @JoinColumn(name = "summary_id")
     )
     @Column(name = "keyword")
+    @Fetch(FetchMode.SUBSELECT)
     private List<String> keywords;
 
 
@@ -60,6 +61,7 @@ public class Summary implements Serializable {
             joinColumns = @JoinColumn(name = "summary_id")
     )
     @Column(name = "catelog")
+    @Fetch(FetchMode.SUBSELECT)
     private List<String> catelogs;
 
 
@@ -86,9 +88,7 @@ public class Summary implements Serializable {
         return id;
     }
 
-    public static String getSEPARATOR() {
-        return SEPARATOR;
-    }
+
 
     public void setId(Long id) {
         this.id = id;

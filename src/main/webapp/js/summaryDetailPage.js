@@ -36,6 +36,8 @@ app.controller('summaryDetailPageCtrl', function ($scope, $log, $http, $interval
             // 请求失败执行代码
             $log.log("analyzation fail", response)
         });
+
+
     }
 
     $scope.switchShowTerms = function () {

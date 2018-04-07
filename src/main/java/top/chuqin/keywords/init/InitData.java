@@ -14,8 +14,6 @@ import top.chuqin.keywords.repository.VisitRepository;
 import top.chuqin.keywords.service.SummaryService;
 import top.chuqin.keywords.service.VisitQueue;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 @Component
@@ -37,6 +35,9 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent> {
     private VisitQueue visitQueue;
     @Autowired
     private SummaryService summaryService;
+    @Autowired
+    private MyCrawler myCrawler;
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -81,7 +82,7 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent> {
 
 
             if (crawlerEnable) {
-                new MyCrawler(visitQueue, summaryService).crawler();
+                myCrawler.start();
                 LOGGER.debug("开启爬虫");
             } else {
                 LOGGER.debug("没有开启爬虫");

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.domain.Tfidf;
 import top.chuqin.keywords.repository.SummaryRepository;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 public class TfidfService {
     private static Logger LOGGER = LoggerFactory.getLogger(TfidfService.class);
 

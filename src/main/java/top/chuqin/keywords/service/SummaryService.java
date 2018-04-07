@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.repository.SummaryRepository;
@@ -17,6 +18,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class SummaryService{
     private static Logger LOGGER = LoggerFactory.getLogger(SummaryService.class);
 

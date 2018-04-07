@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import top.chuqin.keywords.domain.Visit;
 import top.chuqin.keywords.repository.VisitRepository;
 
 @Service
+@Transactional
 @Scope("singleton")
 public class VisitQueue {
     private static Logger LOGGER = LoggerFactory.getLogger(VisitQueue.class);

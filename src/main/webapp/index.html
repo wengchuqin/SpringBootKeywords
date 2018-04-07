@@ -9,6 +9,8 @@
     <script src="plug-in/bootstrap/js/bootstrap.min.js"></script>
     <script src="plug-in/angular/angular.min.js"></script>
     <script src="plug-in/angular/angular-route.js"></script>
+    <script src="plug-in/chars/Chart.bundle.js"></script>
+    <script src="plug-in/chars/angular-chart.js"></script>
 </head>
 <body>
 <div class="container">
@@ -22,6 +24,7 @@
             <li role="presentation" class="active"><a href="#/summariesPage">摘要列表</a></li>
             <li role="presentation"><a href="#/summaryDetailPage">摘要详情</a></li>
             <li role="presentation"><a href="#/algorithmComparisonPage">算法比较</a></li>
+            <li role="presentation"><a href="#/systemPage">系统设置</a></li>
         </ul>
     </div>
     <div ng-view></div>
@@ -30,7 +33,7 @@
 </html>
 
 <script>
-    var app = angular.module('myApp', ['ngRoute']);
+    var app = angular.module('myApp', ['ngRoute', 'chart.js']);
     app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/summariesPage', {
@@ -47,6 +50,11 @@
                 controller: "algorithmComparisonPageCtrl"
 
             })
+            .when('/systemPage', {
+                templateUrl: "systemPage.html",
+                controller: "systemPageCtrl"
+
+            })
             .otherwise({redirectTo: '/summariesPage'});
     }]);
     app.controller("myCtrl", function ($scope, $log, $http, $interval) {
@@ -56,3 +64,4 @@
 <script src="js/summariesPage.js"></script>
 <script src="js/summaryDetailPage.js"></script>
 <script src="js/algorithmComparisonPage.js"></script>
+<script src="js/systemPage.js"></script>
