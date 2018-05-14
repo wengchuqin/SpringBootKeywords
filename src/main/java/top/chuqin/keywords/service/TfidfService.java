@@ -16,16 +16,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Service
+//@Service
 @Transactional
 public class TfidfService implements IExtractKeyword{
     private static Logger LOGGER = LoggerFactory.getLogger(TfidfService.class);
 
     @Autowired
     private SummaryService summaryService;
-
-
-
 
     public Tfidf tfdif(Summary summary, List<WordWithTfidf> tfidfList) {
         Tfidf tfidf = new Tfidf();
@@ -53,7 +50,6 @@ public class TfidfService implements IExtractKeyword{
                 k++;
             }
         }
-
 
         Double p = k / n;
         tfidf.setP(p);

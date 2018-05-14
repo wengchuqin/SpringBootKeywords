@@ -9,10 +9,8 @@ import top.chuqin.keywords.domain.ExtractKeywordResult;
 import top.chuqin.keywords.domain.Summary;
 import top.chuqin.keywords.service.AnalyzationService;
 import top.chuqin.keywords.service.ExtractKeywordResultService;
-import top.chuqin.keywords.vo.AlgorithmCompareVo;
-import top.chuqin.keywords.vo.AnalyzationVo;
-import top.chuqin.keywords.vo.AnalyzeStatus;
-import top.chuqin.keywords.vo.SuccessVo;
+import top.chuqin.keywords.service.SummaryService;
+import top.chuqin.keywords.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +21,8 @@ public class AnalyzationController {
     private AnalyzationService analyzationService;
     @Autowired
     private ExtractKeywordResultService extractKeywordResultService;
+    @Autowired
+    private SummaryService summaryService;
 
     @RequestMapping("/analyzation/{id}")
     public List<ExtractKeywordResult> analyzation(@PathVariable(value="id") Long id){
@@ -43,5 +43,10 @@ public class AnalyzationController {
     @RequestMapping("/analyze/status")
     public AnalyzeStatus status() {
         return analyzationService.getStatus();
+    }
+
+    @RequestMapping("/analyze/category")
+    public List<Category> category(){
+        return summaryService.category();
     }
 }

@@ -37,7 +37,7 @@ public class AnsjSegService implements IExtractKeyword{
         kwc.computeArticleTfidf(title, summary.getSummary()).stream().forEach(kw -> list.add(((Keyword) kw).getName()));
 
         Prf1 prf1 = new Prf1(summary.getKeywords(), list);
-        ExtractKeywordResult result = new ExtractKeywordResult(summary.getId(), ExtractKeywordResult.AlgorithmEnum.ANSJ_SEG,
+        ExtractKeywordResult result = new ExtractKeywordResult(summary.getId(), ExtractKeywordResult.AlgorithmEnum.TF_IDF,
                 String.join(Constant.SEPARATOR, list), prf1);
         LOGGER.debug("extract:" + result);
         return result;

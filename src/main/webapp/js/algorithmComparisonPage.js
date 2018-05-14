@@ -9,6 +9,19 @@ app.controller('algorithmComparisonPageCtrl', function ($scope, $log, $http, $in
         });
     };
 
+    $scope.initTable = function(){
+        $http({
+            method: 'GET',
+            url: 'analyze/category'
+        }).then(function successCallback(response) {
+            $log.log("category", response);
+            $scope.categoryList = response.data;
+        }, function errorCallback(response) {
+            // 请求失败执行代码
+            $log.log("category fail", response)
+        });
+    }
+
     $scope.init = function () {
         $http({
             method: 'GET',
@@ -52,6 +65,7 @@ app.controller('algorithmComparisonPageCtrl', function ($scope, $log, $http, $in
 
 
     $scope.init();
+    $scope.initTable();
 
 });
 
